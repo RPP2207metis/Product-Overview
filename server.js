@@ -1,13 +1,43 @@
-require('dotenv').config();
+/*==================
+  Dependencies
+===================*/
 const express = require('express');
 const mongoose = require('mongoose');
+const { homepage , productsAll, productOne, productStyles, productRelated } = require('./routes/routes.js')
 
+/*==================
+Server and DB Connection
+===================*/
 const app = express();
 
-mongoose.set('strictQuery', true); // DeprecationWarning: Mongoose: the `strictQuery` option will be switched back to `false` by default in Mongoose 7. Use `mongoose.set('strictQuery', false);` if you want to prepare for this change. Or use `mongoose.set('strictQuery', true);` to suppress this warning.
-mongoose.connect('mongodb://localhost/productOverviewSDC'); // no need for {useNewUrlParser: true} anymore?
-const db = mongoose.connection;
-db.on('error', (error) => console.error(error));
-db.once('open', () => console.log('Connection to Database Established!'));
 
-app.listen(process.env.PORT, () => console.log(`Server on localhost ${process.env.PORT}...`));
+/*==================
+  Middleware
+===================*/
+app.use(express.json())
+
+/*==================
+  Routes
+===================*/
+
+/* Homepage */
+app.get('/', homepage)
+
+/* All Products */
+app.get('/products', productsAll)
+
+/* One Product */
+app.get('/products/:product_id', productOne)
+
+/* Product Styles */
+app.get('/products/:product_id/styles', productStyles)
+
+/* Related Products */
+app.get('/products/:product_id/related', productRelated)
+
+/*==================
+  Server Listening
+===================*/
+app.listen(process.env.PORT, () => console.log(`Server on localhost ${process.env.PORT}...`))
+
+
