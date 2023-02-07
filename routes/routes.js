@@ -1,4 +1,4 @@
-const { findOne, findRelated, findStyles } = require('../dbQueries.js')
+const { findAll, findOne, findRelated, findStyles} = require('../dbQueries.js')
 
 const express = require('express')
 /*==================
@@ -14,7 +14,12 @@ const homepage = (req, res) => {
 ===================*/
 
 const productsAll = (req, res) => {
-  res.sendStatus(200)
+  let page = parseInt(req.query.page) || 1;
+  let count = parseInt(req.query.count) || 5;
+  findAll(page, count)
+  .then(products => {
+    res.send(products);
+  })
 }
 
 /*==================
