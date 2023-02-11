@@ -12,8 +12,8 @@ db.once('open', () => console.log('Connection to Database Established!'));
 
 const productSchema = new mongoose.Schema({});
 //ProductAggr
-// const Product = mongoose.model('Product', productSchema, 'prodAggTestFinal')
-const Product = mongoose.model('Product', productSchema, 'products')
+const Product = mongoose.model('Product', productSchema, 'prodAggTestFinal')
+// const Product = mongoose.model('Product', productSchema, 'products')
 
 //Find All
 const findAll = (page, count) => {

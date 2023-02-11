@@ -18,7 +18,7 @@ export const options = {
     contacts: {
       executor: 'constant-arrival-rate',
       duration: '30s',
-      rate: 1000,
+      rate: 1,
       timeUnit: '1s',
       preAllocatedVUs: 2,
       maxVUs: 50000,
@@ -27,8 +27,10 @@ export const options = {
 };
 
 export default function() {
-  let response = http.get(`${relatedRoute}`, options);
+  let response = http.get(`${productRequest}`, options);
   check(response, {
     "status is 200": (r) => r.status === 200
   });
 }
+
+
