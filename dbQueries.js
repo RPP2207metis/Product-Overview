@@ -11,7 +11,35 @@ db.once('open', () => console.log('Connection to Database Established!'));
 
 
 const productSchema = new mongoose.Schema({});
-const Product = mongoose.model('Product' , productSchema, 'products')
+//ProductAggr
+const Product = mongoose.model('Product', productSchema, 'prodAggTestFinal')
+// const Product = mongoose.model('Product', productSchema, 'products')
+
+//Find All
+const findAll = (page, count) => {
+  var products = [];
+  var promises = [];
+  var start = count * page - count + 1
+  for (let i = start; i < start + count; i++) {
+    promises.push(Product.find({id: i})
+    .then(result => {
+      result = result[0]._doc;
+      let formattedResult = {
+        "id": result.id,
+        "name": result.name,
+        "slogan": result.slogan,
+        "description": result.description,
+        "category": result.category,
+        "default_price": result.default_price.toString(),
+      }
+      products.push(formattedResult);
+    }))
+  }
+  return Promise.all(promises)
+  .then(() => {
+    return products;
+  })
+}
 
 //Find One Product//
 const findOne = (productId) => {
