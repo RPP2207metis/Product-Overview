@@ -41,7 +41,8 @@ app.get('/loaderio-0739c1300dab3514075ec644cc486eaa', loaderio )
 
 /* TEST ROUTE */
 app.get('/test', (req, res) => {
-  res.sendStatus(200)
+  console.log('meow')
+  res.send(200)
 })
 
 /*==================
