@@ -9,6 +9,10 @@ const homepage = (req, res) => {
   res.sendStatus(200)
 }
 
+const loaderio = (req, res) => {
+  res.send(`${process.env.LOADERIO}`)
+}
+
 /*==================
   List Products
 ===================*/
@@ -70,5 +74,6 @@ module.exports = {
   productsAll,
   productOne,
   productStyles,
-  productRelated
+  productRelated,
+  loaderio
 }

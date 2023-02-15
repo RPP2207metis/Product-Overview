@@ -4,7 +4,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const { homepage , productsAll, productOne, productStyles, productRelated } = require('./routes/routes.js')
+const { homepage , productsAll, productOne, productStyles, productRelated, loaderio } = require('./routes/routes.js')
 
 /*==================
 Server and DB Connection
@@ -37,9 +37,7 @@ app.get('/products/:product_id/styles', productStyles)
 app.get('/products/:product_id/related', productRelated)
 
 /* Flood.io Authentication */
-app.get('loaderio-0739c1300dab3514075ec644cc486eaa/' , (req, res) => {
-  res.send(`${process.env.LOADERIO}`)
-})
+app.get('loaderio-0739c1300dab3514075ec644cc486eaa/', loaderio )
 
 /*==================
   Server Listening
