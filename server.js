@@ -35,6 +35,11 @@ app.get('/products/:product_id/styles', productStyles)
 /* Related Products */
 app.get('/products/:product_id/related', productRelated)
 
+/* Flood.io Authentication */
+app.get('/loaderio-0739c1300dab3514075ec644cc486eaa/' , (req, res) => {
+  res.send(process.env.LOADERIO)
+})
+
 /*==================
   Server Listening
 ===================*/
