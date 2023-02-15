@@ -1,6 +1,7 @@
 /*==================
   Dependencies
 ===================*/
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const { homepage , productsAll, productOne, productStyles, productRelated } = require('./routes/routes.js')
