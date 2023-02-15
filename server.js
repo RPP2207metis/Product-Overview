@@ -40,7 +40,9 @@ app.get('/products/:product_id/related', productRelated)
 app.get('/loaderio-0739c1300dab3514075ec644cc486eaa', loaderio )
 
 /* TEST ROUTE */
-// app.get()
+app.get('/test', (req, res) => {
+  res.sendStatus(200)
+})
 
 /*==================
   Server Listening
