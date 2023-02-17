@@ -39,12 +39,6 @@ app.get('/products/:product_id/related', productRelated)
 /* Flood.io Authentication */
 app.get('/loaderio-0739c1300dab3514075ec644cc486eaa', loaderio )
 
-/* TEST ROUTE */
-app.get('/test', (req, res) => {
-  console.log('meow')
-  res.send(200)
-})
-
 /*==================
   Server Listening
 ===================*/
