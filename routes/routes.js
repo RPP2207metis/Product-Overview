@@ -58,20 +58,22 @@ const productOne = async (req, res) => {
       if (cacheResults) {
         isCached = true;
         results = JSON.parse(cacheResults)
+        res.status(200).json(results)
       } else {
         findOne(parseInt(productId))
         .then((result) => {
           redisClient.set(`${result.id}`, JSON.stringify(result))
-          res.send(result)
+          //res.send(result)
+          res.status(200).json(result)
         })
         .catch((err) => {
           throw err
         })
       }
-      res.send({
-        fromCache: isCached,
-        data: results
-      })
+      // res.send({
+      //   fromCache: isCached,
+      //   data: results
+      // })
   } catch (err) {
     console.log(err)
   }
