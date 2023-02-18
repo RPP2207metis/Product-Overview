@@ -2,16 +2,19 @@ const Redis = require('redis')
 const DEFAULT_EXPIRATION = 3600
 
 //PRODUCTION INSTANCE OF REDDIS
-const redisClient = Redis.createClient({ url: 'http://54.185.5.152/'}) //PRODUCTION INSTANCE
+// const redisClient = Redis.createClient({ url: 'http://54.185.5.152/'}) //PRODUCTION INSTANCE
 
 //LOCALHOST INSTANCE OF REDIS
-// const redisClient = Redis.createClient()
+const redisClient = Redis.createClient()
 
 //Connect To The Redis DB Prior To Get and Set
 redisClient
   .connect()
   .then((res) => {
     console.log('connected')
+  })
+  .catch((err) => {
+    console.log(err)
   })
 
 const { findAll, findOne, findRelated, findStyles} = require('../dbQueries.js')
