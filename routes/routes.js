@@ -1,3 +1,22 @@
+const Redis = require('redis')
+const DEFAULT_EXPIRATION = 3600
+
+//PRODUCTION INSTANCE OF REDDIS
+// const redisClient = Redis.createClient({ url: 'http://54.185.5.152/'}) //PRODUCTION INSTANCE
+
+//LOCALHOST INSTANCE OF REDIS
+const redisClient = Redis.createClient()
+
+//Connect To The Redis DB Prior To Get and Set
+redisClient
+  .connect()
+  .then((res) => {
+    console.log('connected')
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+
 const { findAll, findOne, findRelated, findStyles} = require('../dbQueries.js')
 
 const express = require('express')
@@ -30,14 +49,34 @@ const productsAll = (req, res) => {
   Product Information
 ===================*/
 
-const productOne = (req, res) => {
-  findOne(parseInt(req.params.product_id))
-  .then((result) => {
-    res.send(result)
-  })
-  .catch((err) => {
-    throw err
-  })
+const productOne = async (req, res) => {
+  let results;
+  let isCached =  false;
+  var productId = req.params.product_id
+  try {
+    const cacheResults = await redisClient.get(productId)
+      if (cacheResults) {
+        isCached = true;
+        results = JSON.parse(cacheResults)
+        res.status(200).json(results)
+      } else {
+        findOne(parseInt(productId))
+        .then((result) => {
+          redisClient.set(`${result.id}`, JSON.stringify(result))
+          //res.send(result)
+          res.status(200).json(result)
+        })
+        .catch((err) => {
+          throw err
+        })
+      }
+      // res.send({
+      //   fromCache: isCached,
+      //   data: results
+      // })
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 /*==================
